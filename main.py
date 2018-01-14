@@ -25,12 +25,13 @@ class Blog(db.Model):
 
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    current_posts = Blog.query.order_by(Blog.id.desc()).all()
+    return render_template('index.html', current_posts=current_posts)
 
-@app.route('/post')
-def post():
-
-    return render_template('post.html')
+@app.route('/post/<int:new_post_id>')
+def post(new_post_id):
+    new_post = Blog.query.filter_by(id=new_post_id).first_or_404()
+    return render_template('post.html', new_post=new_post)
 
 
 @app.route('/add_post', methods=['GET','POST'])
@@ -40,7 +41,7 @@ def add_post():
         new_subtitle = request.form['subtitle']
         new_author = request.form['author']
         new_content = request.form['content']
-        
+
         new_post = Blog(new_title, new_subtitle, new_author, new_content)
         db.session.add(new_post)
         db.session.commit()

@@ -39,8 +39,6 @@
               <a class="nav-link" href="{{ url_for('index') }}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('post') }}">Current Posts</a>
-            <li class="nav-item">
               <a class="nav-link" href="{{ url_for('add_post') }}">Add Post</a>
             </li>
           </ul>
@@ -55,10 +53,10 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="post-heading">
-              <h1>{{}}</h1>
-              <h2 class="subheading"></h2>
+              <h1>{{new_post.title}}</h1>
+              <h2 class="subheading">{{new_post.subtitle}}</h2>
               <span class="meta">Posted by
-                <a href="#">Start Bootstrap</a>
+                {{new_post.author}}
                 on August 24, 2017</span>
             </div>
           </div>
@@ -71,7 +69,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
-            
+            <p>{{new_post.content|safe}}</p>
           </div>
         </div>
       </div>

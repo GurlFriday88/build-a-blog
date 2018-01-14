@@ -38,8 +38,6 @@
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('index') }}">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('post') }}">Current Posts</a>
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('add_post') }}">Add Post</a>
               </li>
@@ -55,8 +53,8 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="site-heading">
-              <h1>Clean Blog</h1>
-              <span class="subheading">A Blog Theme by Start Bootstrap</span>
+              <h1>Adventures in Lattes Escada</h1>
+              <span class="subheading">Idk..It's what the random blog title generator gave me.</span>
             </div>
           </div>
         </div>
@@ -67,20 +65,22 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
+        {% for article in current_posts %}
           <div class="post-preview">
-            <a href="post.html">
+            <a href="{{ url_for('post', new_post_id=article.id ) }}">
               <h2 class="post-title">
-                Man must explore, and this is exploration at its greatest
+                {{article.title}}
               </h2>
               <h3 class="post-subtitle">
-                Problems look mighty small from 150 miles up
+                {{article.subtitle}}
               </h3>
             </a>
             <p class="post-meta">Posted by
-              <a href="#">Start Bootstrap</a>
+              {{article.author}}
               on September 24, 2017</p>
           </div>
           <hr>
+          {% endfor%}
          
           <!-- Pager -->
           <div class="clearfix">
