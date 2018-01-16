@@ -1,5 +1,8 @@
 from flask import Flask, request, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+
+
 
 app = Flask(__name__)
 app.config['DEBUG']=True
@@ -14,12 +17,14 @@ class Blog(db.Model):
     title = db.Column(db.String(50))
     subtitle = db.Column(db.String(50))
     author = db.Column(db.String(30))
+    date = db.Column(db.Integer)
     content = db.Column(db.Text)
 
-    def __init__(self, title, subtitle, author, content):
+    def __init__(self, title, subtitle, author, date, content):
         self.title = title
         self.subtitle = subtitle
         self.author = author
+        self.date = date
         self.content = content
 
 
@@ -38,14 +43,19 @@ def post(new_post_id):
 def add_post():
     if request.method == 'POST':
         new_title = request.form['title']
-        new_subtitle = request.form['subtitle']
-        new_author = request.form['author']
-        new_content = request.form['content']
-
-        new_post = Blog(new_title, new_subtitle, new_author, new_content)
-        db.session.add(new_post)
-        db.session.commit()
-        return redirect(url_for('index'))
+        date = datetime.now()
+        if new_title in new_title:
+            new_post = Blog(
+            new_title, new_subtitle=request.form['subtitle'], new_author=request.form['author'],
+            date,
+            new_content=request.form['content']
+             )
+            db.session.add(new_post)
+            db.session.commit()
+            return redirect(url_for('index'))
+        else:
+            flash("Don't forget the title!")
+            return redirect(url_for('index'))
     return render_template('add_post.html')
 
 
